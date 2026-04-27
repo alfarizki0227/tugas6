@@ -138,3 +138,34 @@ WHERE is_deleted = 0
 ORDER BY harga DESC
 LIMIT 5;
 -- Penjelasan: Menampilkan 5 buku dengan harga paling tinggi.
+
+-- 1. Join untuk menampilkan buku dengan nama penerbit
+SELECT b.judul, b.pengarang, k.nama_kategori, p.nama_penerbit
+FROM buku b
+JOIN kategori_buku k ON b.id_kategori = k.id_kategori
+JOIN penerbit p ON b.id_penerbit = p.id_penerbit;
+
+-- 2. Join untuk jumlah buku per kategori
+SELECT k.nama_kategori, COUNT(b.id_kategori) AS jumlah_buku
+FROM buku b
+JOIN kategori_buku k ON b.id_kategori = k.id_kategori
+GROUP BY k.nama_kategori;
+
+-- 3. Join untuk jumlah buku per penerbit
+SELECT p.nama_penerbit, COUNT(b.id_penerbit) AS jumlah_buku
+FROM buku b
+JOIN penerbit p ON b.id_penerbit = p.id_penerbit
+GROUP BY p.nama_penerbit;
+
+-- 4.Join untuk detail lengkap buku
+SELECT 
+    b.judul,
+    b.pengarang,
+    b.tahun_terbit,
+    b.harga,
+    b.stok,
+    k.nama_kategori,
+    p.nama_penerbit
+FROM buku b
+JOIN kategori_buku k ON b.id_kategori = k.id_kategori
+JOIN penerbit p ON b.id_penerbit = p.id_penerbit;
